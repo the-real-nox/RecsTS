@@ -1,0 +1,8 @@
+{
+  "name": "recs-ts",
+  "version": "1.0.0",
+  "description": "Authentication centralized, open-source and privacy-focused.",
+  "repository": "https://github.com/the-real-nox/RecsTS",
+  "author": "the-real-nox <the-real-nox@outlook.com>",
+  "license": "MIT"
+}
