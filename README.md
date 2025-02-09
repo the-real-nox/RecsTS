@@ -1,4 +1,4 @@
-# Recs 🦖
+# RecsTS 🦖
 - **R**igorous 
 - **e**xtensive
 - **c**entrilzed
