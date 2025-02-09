@@ -1,11 +1,10 @@
 # Recs 🦖
-- **R**igerouse
+- **R**igorous 
 - **e**xtensive
 - **c**entrilzed
 - **s**ecurity-first
 
-⚠️**Warning**⚠️  
-Since I'm not a cybersecurity expert (but my education will bring me there), I won't guarantee anything, but for me security and privacy have always been big concern. I also want something that is not solely dependent on big tech companies, not only because of decentralization (I don't want to take the power over data out of your hands.), but also since the usage of e.g. Firebase would abstract many things (I still partially do this to learn). 
+For me security and privacy have always been big concern. I also want something that is not solely dependent on big tech companies, not only because of decentralization (I don't want to take the power over data out of your hands.), but also since the usage of e.g. Firebase would abstract many things (I still partially do this to learn). 
 
 ## Table of contents
 1. [Concept](concept.md)
