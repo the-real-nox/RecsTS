@@ -1,4 +1,4 @@
-# recs-js 🦖
+# recs.js 🦖
 - **R**igorous 
 - **e**xtensive
 - **c**entrilzed
