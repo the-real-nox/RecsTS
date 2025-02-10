@@ -49,6 +49,8 @@ The user has been authenticated and needs a token for subsequent requests.
 
 4. For the time of `life-duration`, the website can be viewed. Data is accessible for the `backend-duration`, after which the first cycle in the [token-life-cycle](#token-life-cycle) starts.
 
+5. A session is created on the server-side.
+
 ## Token-life-cycle
 1. The client has been notified during his request that his `access-token` has gone stale and now sends a request, containing the stale token, to obtain a fresh one using the `refresh-token`.  
 

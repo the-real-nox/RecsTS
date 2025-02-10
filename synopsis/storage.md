@@ -5,6 +5,7 @@ The following tables will be utilized:
 - **`user`**
 - **`refresh_token`**
 - **`access_token`**
+- **`session`**
 
 ## The `user`-table
 The aim of this table is to store the following atributes for a user:
@@ -16,6 +17,20 @@ The aim of this table is to store the following atributes for a user:
 
 ## The `refresh_token`-table
 The aim of this table is to store the refresh-tokens explained in the [concept](concept.md#speaking-of-tokens):
-- `user        +unique @user`: The user the tokens belongs to.
+- `user        +unique @user`: The user the token belongs to.
 - `token       +unique [string]`: The refresh-token itself.
 - `valid_until         [date]`: The time at which the token runs stale.
+
+## The `access_token`-table
+The aim of this table is to store all the access token explained in the [concept](concept.md#speaking-of-tokens)
+- `user +unique @user`: The user the token belongs to.
+- `token +unique [string]`: The access-token itself.
+- `valid_unitl [date]`: The time at which the token runs stale.
+
+## The `session`-table
+The aim of this table is to store all sessions by user and ip-address.
+- `session_id +primary [uuid]`: Unique id generated for the session.
+- `user                @user `: The user the session belongs to.
+- `ipv6                [cidr]`: The ipv6-address from which the session was initialized. Either ipv6 or ipv4 must be set.
+- `ipv4                [cidr]`: The ipv4-address from which the session was initialized. Either ipv6 or ipv4 must be set.
+- `valid_until         [date]`: The time at which the session expires. Must be the same time that is set in the `jwt` for the `id-token`. 
