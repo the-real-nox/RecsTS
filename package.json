@@ -1,5 +1,5 @@
 {
-  "name": "recs-ts",
+  "name": "recs-js",
   "version": "1.0.0",
   "main": "./dist/recs.js",
   "types": "./dist/recs.d.ts",
