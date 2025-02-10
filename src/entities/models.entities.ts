@@ -68,3 +68,5 @@ export class RecsSession {
     @ManyToOne(() => RecsUser, { nullable: false })
     user!: RecsUser;
 }
+
+export default [RecsUser, RecsSession, RecsRefreshToken, RecsAccessToken];
