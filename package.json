@@ -1,7 +1,8 @@
 {
   "name": "recs-ts",
   "version": "1.0.0",
-  "main": "",
+  "main": "./dist/recs.js",
+  "types": "./dist/recs.d.ts",
   "description": "Authentication centralized, open-source and privacy-focused.",
   "repository": "https://github.com/the-real-nox/recs-ts",
   "author": "the-real-nox <the-real-nox@outlook.com>",
