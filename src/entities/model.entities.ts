@@ -29,21 +29,16 @@ export class RecsUser {
     @Property({ nullable: false })
     password_hash!: string;
 
-    @OneToMany(() => RecsRefreshToken, (refreshToken) => refreshToken.user)
-    refresh_tokens = new Collection<RecsRefreshToken>(this);
-
-    @OneToMany(() => RecsRefreshToken, (refreshToken) => refreshToken.user)
-    access_tokens = new Collection<RecsAccessToken>(this);
-
     @OneToMany(() => RecsSession, (session) => session.user)
+    session = new Collection<RecsSession>(this);
 }
 
 export class RecsRefreshToken {
     @PrimaryKey()
     token!: string;
 
-    @ManyToOne(() => RecsUser, { nullable: false })
-    user!: RecsUser;
+    @ManyToOne(() => RecsSession, { nullable: false })
+    user!: RecsSession;
     
     @Property({ nullable: false })
     valid_until!: Date;
@@ -53,8 +48,8 @@ export class RecsAccessToken {
     @PrimaryKey()
     token!: string;
 
-    @ManyToOne(() => RecsUser, { nullable: false })
-    user!: RecsUser;
+    @ManyToOne(() => RecsSession, { nullable: false })
+    user!: RecsSession;
     
     @Property({ nullable: false })
     valid_until!: Date;
@@ -64,9 +59,12 @@ export class RecsSession {
     @PrimaryKey({ type: 'uuid' })
     session_id = v4();
 
-    @OneToOne({ nullable: true })
+    @OneToOne({ nullable: false })
     access_token!: RecsAccessToken;
 
-    @OneToOne({ nullable: true })
+    @OneToOne({ nullable: false })
     refresh_token!: RecsRefreshToken;
+
+    @ManyToOne(() => RecsUser, { nullable: false })
+    user!: RecsUser;
 }
