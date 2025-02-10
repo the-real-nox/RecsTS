@@ -55,3 +55,7 @@ The user has been authenticated and needs a token for subsequent requests.
 1. The client has been notified during his request that his `access-token` has gone stale and now sends a request, containing the stale token, to obtain a fresh one using the `refresh-token`.  
 
 3. The server receives both tokens and checks if they are valid and belong together. If not, the admin is notified and the user is logged out immediately. If it was valid, the server deletes both tokens from his storage (see [storage](storage.md)) and sends the new tokens to the client. The cycle starts again.
+
+## Reaching end of `life-duration`
+1. The session of the user is determined.
+2. The `access_token` and the `refresh_token` are deleted. After that, also the session is deleted.
