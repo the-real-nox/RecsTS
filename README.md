@@ -1,5 +1,5 @@
-# RecsTS 🦖
-- **R**igorous 
+# recs-ts 🦖
+- **r**igorous 
 - **e**xtensive
 - **c**entrilzed
 - **s**ecurity-first
