@@ -2,7 +2,14 @@
   "name": "recs-ts",
   "version": "1.0.0",
   "description": "Authentication centralized, open-source and privacy-focused.",
-  "repository": "https://github.com/the-real-nox/RecsTS",
+  "repository": "https://github.com/the-real-nox/recs-ts",
   "author": "the-real-nox <the-real-nox@outlook.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@mikro-orm/core": "^6.4.5",
+    "@mikro-orm/postgresql": "^6.4.5",
+    "jose": "^5.9.6",
+    "nanoid": "^5.0.9",
+    "typescript": "^5.7.3"
+  }
 }
