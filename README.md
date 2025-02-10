@@ -1,5 +1,5 @@
-# recs-ts 🦖
-- **r**igorous 
+# recs-js 🦖
+- **R**igorous 
 - **e**xtensive
 - **c**entrilzed
 - **s**ecurity-first
