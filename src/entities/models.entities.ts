@@ -33,6 +33,7 @@ export class RecsUser {
     session = new Collection<RecsSession>(this);
 }
 
+@Entity()
 export class RecsRefreshToken {
     @PrimaryKey()
     token!: string;
@@ -44,6 +45,7 @@ export class RecsRefreshToken {
     valid_until!: Date;
 }
 
+@Entity()
 export class RecsAccessToken {
     @PrimaryKey()
     token!: string;
@@ -55,6 +57,7 @@ export class RecsAccessToken {
     valid_until!: Date;
 }
 
+@Entity()
 export class RecsSession {
     @PrimaryKey({ type: 'uuid' })
     session_id = v4();
@@ -69,4 +72,4 @@ export class RecsSession {
     user!: RecsUser;
 }
 
-export default [RecsUser, RecsSession, RecsRefreshToken, RecsAccessToken];
+export default [RecsSession, RecsUser, RecsRefreshToken, RecsAccessToken];
