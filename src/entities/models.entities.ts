@@ -1,4 +1,4 @@
-import { Collection, Entity, Enum, ManyToOne, OneToMany, OneToOne, PrimaryKey, Property, Unique } from "@mikro-orm/core";
+import { Collection, Entity, Enum, ManyToOne, OneToMany, PrimaryKey, Property, Unique } from "@mikro-orm/core";
 import { v4 } from "uuid";
 
 export enum UserStatus {
@@ -34,42 +34,27 @@ export class RecsUser {
 }
 
 @Entity()
-export class RecsRefreshToken {
-    @PrimaryKey()
-    token!: string;
-
-    @ManyToOne(() => RecsSession, { nullable: false })
-    user!: RecsSession;
-    
-    @Property({ nullable: false })
-    valid_until!: Date;
-}
-
-@Entity()
-export class RecsAccessToken {
-    @PrimaryKey()
-    token!: string;
-
-    @ManyToOne(() => RecsSession, { nullable: false })
-    user!: RecsSession;
-    
-    @Property({ nullable: false })
-    valid_until!: Date;
-}
-
-@Entity()
 export class RecsSession {
     @PrimaryKey({ type: 'uuid' })
     session_id = v4();
 
-    @OneToOne({ nullable: false })
-    access_token!: RecsAccessToken;
+    @Property({ nullable: false, unique: true })
+    refresh_token!: string;
+    
+    @Property({ nullable: false, unique: true })
+    access_token!: string;
+    
+    @Property({ nullable: false })
+    access_token_created!: Date;
 
-    @OneToOne({ nullable: false })
-    refresh_token!: RecsRefreshToken;
+    @Property({ nullable: false })
+    ip!: string;
+
+    @Property({ nullable: false })
+    created_at!: Date;
 
     @ManyToOne(() => RecsUser, { nullable: false })
     user!: RecsUser;
 }
 
-export default [RecsSession, RecsUser, RecsRefreshToken, RecsAccessToken];
+export default [ RecsSession, RecsUser ];
