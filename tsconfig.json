@@ -5,6 +5,7 @@
         "target": "ES2022",
         "strict": true,
         "outDir": "dist",
+        "sourceMap": true,
         "declaration": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
