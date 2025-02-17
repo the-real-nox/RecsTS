@@ -1,6 +1,60 @@
-import { RecsAccessToken } from "./entities/recs-access-token.entity.js";
-import { RecsRefreshToken } from "./entities/recs-refresh-token.entity.js";
-import { RecsSession } from "./entities/recs-session.entity.js";
-import { RecsUser } from "./entities/recs-user.entity.js";
+import { Collection, Entity, Enum, ManyToOne, OneToMany, PrimaryKey, Property, Unique } from "@mikro-orm/core";
+import { v4 } from "uuid";
 
-export default [ RecsUser, RecsSession, RecsAccessToken, RecsRefreshToken ];
+export enum UserStatus {
+    ACTIVE,
+    LOCKED,
+    UNCONFIRMED,
+    INACTIVE,
+}
+
+@Entity()
+export class RecsUser {
+
+    @PrimaryKey({ type: "uuid" })
+    id = v4();
+
+    @Property({ nullable: false })
+    @Unique()
+    username!: string;
+
+    @Property({ nullable: false })
+    @Unique()
+    email!: string;
+
+    @Property({ nullable: false })
+    @Enum(() => UserStatus)
+    account_status!: string;
+
+    @Property({ nullable: false })
+    password_hash!: string;
+
+    @OneToMany(() => RecsSession, (session) => session.user)
+    session = new Collection<RecsSession>(this);
+}
+
+@Entity()
+export class RecsSession {
+    @PrimaryKey({ type: 'uuid' })
+    session_id = v4();
+
+    @Property({ nullable: false, unique: true })
+    refresh_token!: string;
+    
+    @Property({ nullable: false, unique: true })
+    access_token!: string;
+    
+    @Property({ nullable: false })
+    access_token_created!: Date;
+
+    @Property({ nullable: false })
+    ip!: string;
+
+    @Property({ nullable: false })
+    created_at!: Date;
+
+    @ManyToOne(() => RecsUser, { nullable: false })
+    user!: RecsUser;
+}
+
+export default [ RecsSession, RecsUser ];
