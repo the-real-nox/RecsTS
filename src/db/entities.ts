@@ -1,12 +1,6 @@
 import { Collection, Entity, Enum, ManyToOne, OneToMany, PrimaryKey, Property, Unique } from "@mikro-orm/core";
 import { v4 } from "uuid";
-
-export enum UserStatus {
-    ACTIVE,
-    LOCKED,
-    UNCONFIRMED,
-    INACTIVE,
-}
+import { UserStatus } from "../lib/def.js";
 
 @Entity()
 export class RecsUser {
@@ -24,7 +18,7 @@ export class RecsUser {
 
     @Property({ nullable: false })
     @Enum(() => UserStatus)
-    account_status!: string;
+    user_status!: UserStatus;
 
     @Property({ nullable: false })
     password_hash!: string;
