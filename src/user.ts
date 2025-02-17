@@ -2,11 +2,11 @@ import { validate } from "email-validator";
 import { CONFIG, DB } from "./config.js";
 import { ErrorCode, RecsError } from "./lib/error.js";
 import * as argon from "argon2";
-import { RecsUser } from "./db/entities.js";
-import { UserStatus } from "./lib/def.js";
+import { RecsUser, UserStatus } from "./lib/def.js";
+import { recsUsers } from "./db/schema.js";
 
-export async function createRecsUser(username: string, password: string, email: string): Promise<RecsUser> {
-    if (!CONFIG.validation.username_regex.test(username)) {
+export async function createRecsUser(userName: string, password: string, email: string): Promise<any> {
+    if (!CONFIG.validation.username_regex.test(userName)) {
         throw new RecsError(ErrorCode.INVALID_USERNAME, `Username does not match ${CONFIG.validation.username_regex}!`);
     }
 
@@ -20,10 +20,10 @@ export async function createRecsUser(username: string, password: string, email: 
 
     const hash: string = await argon.hash(password);
 
-    return DB.em.create(RecsUser, {
-        user_status: UserStatus.UNCONFIRMED,
+    return [ DB.insert(recsUsers).values({
+        userName: userName,
         email: email,
         password_hash: hash,
-        username: username,
-    });
+        status: UserStatus.UNCONFIRMED
+    }).returning({ insertedID: recsUsers.id })];
 }

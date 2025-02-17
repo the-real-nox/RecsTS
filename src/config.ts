@@ -1,12 +1,6 @@
-import { MikroORM } from "@mikro-orm/postgresql";
 import { ErrorCode, RecsError } from "./lib/error.js";
-
-export interface RecsConfig {
-    validation: {
-        username_regex: RegExp,
-        password_regex: RegExp
-    }
-}
+import { RecsConfig } from "./lib/def.js";
+import { NodePgDatabase } from "drizzle-orm/node-postgres";
 
 export let CONFIG: RecsConfig = {
     validation: {
@@ -15,12 +9,11 @@ export let CONFIG: RecsConfig = {
     }
 }
 
-export let DB: MikroORM;
+export let DB: NodePgDatabase;
 
 let configured = false;
 
-export function configRecs(db: MikroORM, config: RecsConfig = CONFIG) {
-
+export function configRecs(db: NodePgDatabase, config: RecsConfig = CONFIG) {
     if (configured) {
         throw new RecsError(ErrorCode.DUAL_CONFIG, "Config can only be called once!");
     }
