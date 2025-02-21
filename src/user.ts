@@ -5,7 +5,7 @@ import * as argon from "argon2";
 import { RecsUser, UserStatus } from "./lib/def.js";
 import { recsUsers } from "./db/schema.js";
 
-export async function createRecsUser(userName: string, password: string, email: string): Promise<any> {
+export async function createRecsUser(userName: string, password: string, email: string): Promise<RecsUser> {
     if (!CONFIG.validation.username_regex.test(userName)) {
         throw new RecsError(ErrorCode.INVALID_USERNAME, `Username does not match ${CONFIG.validation.username_regex}!`);
     }
@@ -20,10 +20,12 @@ export async function createRecsUser(userName: string, password: string, email: 
 
     const hash: string = await argon.hash(password);
 
-    return [ DB.insert(recsUsers).values({
+    const [ result ] = await (DB as any).insert(recsUsers).values({
         userName: userName,
         email: email,
-        password_hash: hash,
+        passwordHash: hash,
         status: UserStatus.UNCONFIRMED
-    }).returning({ insertedID: recsUsers.id })];
+    }).returning({ id: recsUsers.id, userName: recsUsers.userName, email: recsUsers.email, passwordHash: recsUsers.passwordHash, status: recsUsers.status });
+
+    return result as RecsUser;
 }

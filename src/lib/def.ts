@@ -1,8 +1,3 @@
-import { UUID } from "crypto"
-import { InferModelFromColumns, InferSelectModel } from "drizzle-orm"
-import { pgEnum } from "drizzle-orm/pg-core"
-import { recsUsers } from "../db/schema.js"
-
 export enum UserStatus {
     ACTIVE = 'active',
     LOCKED = 'locked',
@@ -10,7 +5,6 @@ export enum UserStatus {
     INACTIVE = 'inactive',
 }
 
-export const PGUserStatus = pgEnum("userStatus", Object.keys(UserStatus) as [string, ...string[]])
 
 export interface RecsConfig {
     validation: {

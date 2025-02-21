@@ -10,7 +10,7 @@
     "./synopsis/"
   ],
   "exports": {
-    "./entities": "./dist/db/entities.js",
+    "./db_schema": "./dist/db/schema.js",
     ".": "./dist/index.js"
   },
   "description": "Authentication centralized, open-source and privacy-focused.",
