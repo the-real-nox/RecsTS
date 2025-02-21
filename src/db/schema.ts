@@ -4,7 +4,7 @@ import { v4 } from "uuid";
 import { UserStatus } from "../lib/def.js";
 
 console.log()
-export const PGUserStatus = pgEnum("userStatus", Object.keys(UserStatus) as [string, ...string[]])//Object.keys(UserStatus) as [string, ...string[]])
+export const PGUserStatus = pgEnum("userStatus", Object.values(UserStatus) as [string, ...string[]])//Object.keys(UserStatus) as [string, ...string[]])
 
 export const recsUsers = pgTable('recs_user', {
     id: uuid().primaryKey().$defaultFn(() => v4()),
