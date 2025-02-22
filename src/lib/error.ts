@@ -1,14 +1,15 @@
-export const enum ErrorCode {
+export enum RecsErrorCode {
     INVALID_USERNAME,
     INVALID_PASSWORD,
     INVALID_EMAIL,
-    DUAL_CONFIG
+    USER_EXISTS,
+    DUAL_CONFIG,
 }
 
 export class RecsError extends Error {
-    public code: ErrorCode;
+    public code: RecsErrorCode;
 
-    constructor(code: ErrorCode, msg: string) {
+    constructor(code: RecsErrorCode, msg: string) {
         super(msg);
 
         this.code = code;

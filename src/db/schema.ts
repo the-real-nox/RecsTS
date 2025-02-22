@@ -3,13 +3,12 @@ import { relations } from "drizzle-orm";
 import { v4 } from "uuid";
 import { UserStatus } from "../lib/def.js";
 
-console.log()
 export const PGUserStatus = pgEnum("userStatus", Object.values(UserStatus) as [string, ...string[]])//Object.keys(UserStatus) as [string, ...string[]])
 
 export const recsUsers = pgTable('recs_user', {
     id: uuid().primaryKey().$defaultFn(() => v4()),
     userName: text().notNull().unique(),
-    email: text().notNull().unique(),
+    email: text().notNull(),
     status: PGUserStatus('status').notNull(),
     passwordHash: text().notNull(),
 })

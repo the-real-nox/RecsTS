@@ -1,4 +1,4 @@
-import { ErrorCode, RecsError } from "./lib/error.js";
+import { RecsErrorCode, RecsError } from "./lib/error.js";
 import { RecsConfig } from "./lib/def.js";
 import { PgDatabase } from "drizzle-orm/pg-core";
 
@@ -15,7 +15,7 @@ let configured = false;
 
 export function configRecs(db: PgDatabase<any>, config: RecsConfig = CONFIG) {
     if (configured) {
-        throw new RecsError(ErrorCode.DUAL_CONFIG, "Config can only be called once!");
+        throw new RecsError(RecsErrorCode.DUAL_CONFIG, "Config can only be called once!");
     }
 
     configured = true;

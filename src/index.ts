@@ -1,6 +1,4 @@
-import { configRecs} from "./config.js";
-import * as user from "./user.js";
-import * as error from "./lib/error.js";
-import * as def from "./lib/def.js";
-
-export { user, configRecs, error, def };
+export { configRecs} from "./config.js";
+export * from "./user.js";
+export * from "./lib/error.js";
+export * from "./lib/def.js";

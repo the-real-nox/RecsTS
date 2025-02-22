@@ -9,7 +9,7 @@ The following tables will be utilized:
 The aim of this table is to store the following atributes for a user:
 - `id       +primary [uuid] `: ID assigned to the user
 - `username +unique  [string]`: The preferred user-name of the user (can be changed later on) 
-- `email    +unique  [string]`: The email of the user (can be changed later on)
+- `email             [string]`: The email of the user (can be changed later on)
 - `user_status       [string]`: Look at the [concept](concept.md#the-user-account)
 - `password_hash     [string]`: The password hashed with [bcrypt](https://github.com/dcodeIO/bcrypt.js)
 

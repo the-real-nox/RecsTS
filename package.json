@@ -10,7 +10,8 @@
     "./synopsis/"
   ],
   "exports": {
-    "./db_schema": "./dist/db/schema.js",
+    "./error": "./dist/lib/errors.js",
+    "./schema": "./dist/db/schema.js",
     ".": "./dist/index.js"
   },
   "description": "Authentication centralized, open-source and privacy-focused.",
@@ -26,6 +27,7 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.3",
     "email-validator": "^2.0.4",
+    "express-validator": "^7.2.1",
     "jose": "^5.9.6",
     "nanoid": "^5.0.9",
     "pg": "^8.13.3",
