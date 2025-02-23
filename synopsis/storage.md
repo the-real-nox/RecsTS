@@ -1,5 +1,5 @@
 # Storage
-Data is stored in a SQL-database (with [Mikro-ORM](https://mikro-orm.io/))
+Data is stored in a SQL-database (with [drizzle](https://orm.drizzle.team/))
 The following tables will be utilized:
 
 - **`recs_user`**
@@ -11,7 +11,7 @@ The aim of this table is to store the following atributes for a user:
 - `username +unique  [string]`: The preferred user-name of the user (can be changed later on) 
 - `email             [string]`: The email of the user (can be changed later on)
 - `user_status       [string]`: Look at the [concept](concept.md#the-user-account)
-- `password_hash     [string]`: The password hashed with [bcrypt](https://github.com/dcodeIO/bcrypt.js)
+- `password_hash     [string]`: The password hashed with [argon2](https://www.npmjs.com/package/argon2)
 
 ## The `recs_session`-table
 The aim of this table is to store all sessions by user and ip-address.
