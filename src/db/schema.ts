@@ -1,7 +1,8 @@
-import { cidr, date, pgEnum, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { char, cidr, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { v4 } from "uuid";
 import { UserStatus } from "../lib/def.js";
+import { randomBytes } from "crypto";
 
 export const PGUserStatus = pgEnum("userStatus", Object.values(UserStatus) as [string, ...string[]])//Object.keys(UserStatus) as [string, ...string[]])
 
@@ -17,14 +18,21 @@ export const recsSessions = pgTable('recs_session', {
     id: uuid().primaryKey(),
     refreshToken: text().notNull().unique(),
     accessToken: text().notNull().unique(),
-    accessTokenCreated: date().notNull(),
+    accessTokenCreated: timestamp().notNull().defaultNow(),
     ip: cidr().notNull(),
-    createdAt: date().notNull(),
+    createdAt: timestamp().notNull().defaultNow(),
     userId: uuid().notNull()
 });
 
-export const recsUsersRelations = relations(recsUsers, ({ many }) => ({
-    sessions: many(recsSessions)
+export const recsUserConfirmation = pgTable('recs_user_confirmation', {
+    userId:  uuid().primaryKey().references(() => recsUsers.id),
+    confirmationToken: char({ length: 128 }).notNull().unique().$defaultFn(() => randomBytes(128).toString("base64url").slice(0, 128)),
+    createdAt:timestamp().notNull().defaultNow()
+})
+
+export const recsUsersRelations = relations(recsUsers, ({ many, one }) => ({
+    sessions: many(recsSessions),
+    confirmation: one(recsUserConfirmation)
 }));
 
 export const recsSessionsRelations = relations(recsSessions, ({ one }) => ({

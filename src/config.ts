@@ -1,13 +1,16 @@
-import { RecsErrorCode, RecsError } from "./lib/error.js";
+import { RecsError } from "./lib/error.js";
 import { RecsConfig } from "./lib/def.js";
 import { PgDatabase } from "drizzle-orm/pg-core";
-import { SentMessageInfo, Transport, Transporter, TransportOptions } from "nodemailer";
-import { Options } from "nodemailer/lib/mailer/index.js";
+import { Transporter } from "nodemailer";
 
 export let RECS_CONFIG: RecsConfig = {
     validation: {
         username_regex: /\w{5,15}/,
         password_regex: /(\w|[!"#\$%&'\(\)\*\+,-\.\/:;<=>\?@\[\\\]\^_`{\|}~]){12,}/
+    },
+    mail: {
+        confirmationURLTemplate: undefined,
+        sender: undefined
     }
 }
 
@@ -22,6 +25,14 @@ export function configRecs(db: PgDatabase<any>, mail_transport: Transporter, con
     }
 
     configured = true;
+
+    if (!config.mail.confirmationURLTemplate) {
+        throw new RecsError("INVALID_CONFIG", "The user-account-confirmation-url-template must be set!")
+    }
+
+    if (!config.mail.sender) {
+        throw new RecsError("INVALID_CONFIG", "The sender-email for account-confirmation must be set!")
+    }
 
     RECS_CONFIG = config;
     DB = db;

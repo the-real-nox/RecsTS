@@ -3,7 +3,8 @@ export type RecsErrorCode =
     "INVALID_PASSWORD" |
     "INVALID_EMAIL"    |
     "USER_EXISTS"      |
-    "DUAL_CONFIG";
+    "DUAL_CONFIG"      |
+    "INVALID_CONFIG";
 
 export class RecsError extends Error {
     public code: RecsErrorCode;

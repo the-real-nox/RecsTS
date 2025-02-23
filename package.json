@@ -23,12 +23,14 @@
     "watch": "tsc --watch"
   },
   "dependencies": {
+    "@types/luxon": "^3.4.2",
     "argon2": "^0.41.1",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.3",
     "email-validator": "^2.0.4",
     "express-validator": "^7.2.1",
     "jose": "^5.9.6",
+    "luxon": "^3.5.0",
     "nanoid": "^5.0.9",
     "nodemailer": "^6.10.0",
     "pg": "^8.13.3",

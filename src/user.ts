@@ -1,12 +1,25 @@
 import { validate } from "email-validator";
-import { RECS_CONFIG, DB } from "./config.js";
-import { RecsErrorCode, RecsError } from "./lib/error.js";
+import { RECS_CONFIG, DB, MAIL_TRANSPORT } from "./config.js";
+import { RecsError } from "./lib/error.js";
 import * as argon from "argon2";
 import { RecsUser, UserStatus } from "./lib/def.js";
-import { recsUsers } from "./db/schema.js";
+import { recsUsers, recsUserConfirmation } from "./db/schema.js";
+import { SentMessageInfo } from "nodemailer";
 
-import pg from "pg";
-const { DatabaseError } = pg;
+async function startUserConfirmation(user: RecsUser) {
+    const token = await DB.insert(recsUserConfirmation).values({
+        userId: user.id,
+    }).returning({ confirmationToken: recsUserConfirmation.confirmationToken })
+
+    const info = await MAIL_TRANSPORT.sendMail({
+        from: `"Open-toolbox NO REPLY" ${RECS_CONFIG.mail.sender}`,
+        to: user.email,
+        subject: "Open-toolbox account-confirmation",
+        text: RECS_CONFIG.mail.confirmationURLTemplate! + token,
+    })
+
+    console.log(`Email sent: ${info.messageId}`);
+}
 
 export async function createRecsUser(userName: string, password: string, email: string): Promise<RecsUser | undefined> {
     if (!RECS_CONFIG.validation.username_regex.test(userName)) {
@@ -23,16 +36,15 @@ export async function createRecsUser(userName: string, password: string, email: 
 
     const hash: string = await argon.hash(password);
 
+    let result: RecsUser | undefined;
 
     try {
-        const [result] = await DB.insert(recsUsers).values({
+        [ result ] = await DB.insert(recsUsers).values({
             userName: userName,
             email: email,
             passwordHash: hash,
             status: UserStatus.UNCONFIRMED
         }).returning({ id: recsUsers.id, userName: recsUsers.userName, email: recsUsers.email, passwordHash: recsUsers.passwordHash, status: recsUsers.status });
-
-        return result as RecsUser;
     } catch (err: any) {
         if ("code" in err && "constraint" in err) {
             if (err.code == '23505') { // duplicate-violation
@@ -42,4 +54,8 @@ export async function createRecsUser(userName: string, password: string, email: 
 
         throw err;
     }
+
+    startUserConfirmation(result);
+
+    return result;
 }

@@ -10,6 +10,10 @@ export interface RecsConfig {
     validation: {
         username_regex: RegExp,
         password_regex: RegExp
+    },
+    mail: {
+        confirmationURLTemplate: string | undefined,
+        sender: string | undefined;
     }
 }
 
