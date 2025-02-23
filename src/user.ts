@@ -1,5 +1,5 @@
 import { validate } from "email-validator";
-import { CONFIG, DB } from "./config.js";
+import { RECS_CONFIG, DB } from "./config.js";
 import { RecsErrorCode, RecsError } from "./lib/error.js";
 import * as argon from "argon2";
 import { RecsUser, UserStatus } from "./lib/def.js";
@@ -9,11 +9,11 @@ import pg from "pg";
 const { DatabaseError } = pg;
 
 export async function createRecsUser(userName: string, password: string, email: string): Promise<RecsUser | undefined> {
-    if (!CONFIG.validation.username_regex.test(userName)) {
-        throw new RecsError("INVALID_USERNAME", `Username does not match ${CONFIG.validation.username_regex}!`);
+    if (!RECS_CONFIG.validation.username_regex.test(userName)) {
+        throw new RecsError("INVALID_USERNAME", `Username does not match ${RECS_CONFIG.validation.username_regex}!`);
     }
 
-    if (!CONFIG.validation.password_regex.test(password)) {
+    if (!RECS_CONFIG.validation.password_regex.test(password)) {
         throw new RecsError("USER_EXISTS", "The password did not meet given requirements!");
     }
 
@@ -34,7 +34,6 @@ export async function createRecsUser(userName: string, password: string, email: 
 
         return result as RecsUser;
     } catch (err: any) {
-        console.log(err);
         if ("code" in err && "constraint" in err) {
             if (err.code == '23505') { // duplicate-violation
                 throw new RecsError("USER_EXISTS", "User already exists!");
