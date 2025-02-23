@@ -10,15 +10,15 @@ const { DatabaseError } = pg;
 
 export async function createRecsUser(userName: string, password: string, email: string): Promise<RecsUser | undefined> {
     if (!CONFIG.validation.username_regex.test(userName)) {
-        throw new RecsError(RecsErrorCode.INVALID_USERNAME, `Username does not match ${CONFIG.validation.username_regex}!`);
+        throw new RecsError("INVALID_USERNAME", `Username does not match ${CONFIG.validation.username_regex}!`);
     }
 
     if (!CONFIG.validation.password_regex.test(password)) {
-        throw new RecsError(RecsErrorCode.INVALID_PASSWORD, "The password did not meet given requirements!");
+        throw new RecsError("USER_EXISTS", "The password did not meet given requirements!");
     }
 
     if (!validate(email)) {
-        throw new RecsError(RecsErrorCode.INVALID_EMAIL, "The email provided is not valid!")
+        throw new RecsError("USER_EXISTS", "The email provided is not valid!")
     }
 
     const hash: string = await argon.hash(password);
@@ -37,7 +37,7 @@ export async function createRecsUser(userName: string, password: string, email: 
         console.log(err);
         if ("code" in err && "constraint" in err) {
             if (err.code == '23505') { // duplicate-violation
-                throw new RecsError(RecsErrorCode.USER_EXISTS, "User already exists!");
+                throw new RecsError("USER_EXISTS", "User already exists!");
             }
         }
 
