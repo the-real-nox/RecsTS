@@ -15,7 +15,7 @@ let configured = false;
 
 export function configRecs(db: PgDatabase<any>, config: RecsConfig = CONFIG) {
     if (configured) {
-        throw new RecsError(RecsErrorCode.DUAL_CONFIG, "Config can only be called once!");
+        throw new RecsError("DUAL_CONFIG", "Config can only be called once!");
     }
 
     configured = true;

@@ -1,10 +1,9 @@
-export enum RecsErrorCode {
-    INVALID_USERNAME,
-    INVALID_PASSWORD,
-    INVALID_EMAIL,
-    USER_EXISTS,
-    DUAL_CONFIG,
-}
+export type RecsErrorCode =
+    "INVALID_USERNAME" |
+    "INVALID_PASSWORD" |
+    "INVALID_EMAIL"    |
+    "USER_EXISTS"      |
+    "DUAL_CONFIG";
 
 export class RecsError extends Error {
     public code: RecsErrorCode;
